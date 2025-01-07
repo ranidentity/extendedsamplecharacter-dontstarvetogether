@@ -52,7 +52,6 @@ local common_postinit = function(inst)
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "esctemplate.tex" )
 end
-
 -- This initializes for the server only. Components are added here.
 local master_postinit = function(inst)
 	-- Set starting inventory
@@ -74,7 +73,9 @@ local master_postinit = function(inst)
 	
 	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
+
 	
+
 	-- leveler
     if Leveler and Leveler.Init then
         Leveler.Init(inst)
