@@ -24,7 +24,23 @@ local SKILLS = {
             inst.components.health:SetMaxHealth(inst.components.health.maxhealth + increase)
         end,
     },
-
+    damage_boost = {
+        name = "Damage Boost",
+        description = "Increases damage by 10% per level.",
+        max_level = 5,
+        effect = function(inst, level)
+            -- Calculate the damage boost
+            local damage_increase = 0.1 * level -- 10% per level
+            inst.damage_multiplier = 1 + damage_increase
+            -- Increase damage by calculated amount
+            inst.components.combat.externaldamagemultipliers:SetModifier(inst, "damage_boost", inst.damage_multiplier)
+        end,
+        on_remove = function(inst)
+            -- Remove the damage boost when the skill is removed
+            inst.components.combat.externaldamagemultipliers:RemoveModifier(inst, "damage_boost")
+            inst.damage_multiplier = 1
+        end,
+    },
     -- active
     dash = {
         name = "Dash",
@@ -88,12 +104,17 @@ local SKILLS = {
             end
             -- inst.AnimState:PlayAnimation("smash_ground")
             -- inst.SoundEmitter:PlaySound("dontstarve/common/deathpoof")
-            local base_damage = 50
-            local damage = base_damage + (10 * level) -- Increase damage by 10 per level
             local stun_duration = 0 + (0.5 * level) -- Increase stun duration by 0.5 seconds per level
             local radius = 2+ (0.5 * level)  -- Radius of the smash effect
             local x, y, z = inst.Transform:GetWorldPosition()
             local ents = TheSim:FindEntities(x, y, z, radius, { "combat" }, { "player", "INLIMBO" })
+
+            -- Define damage based on base_damage
+            local damage = inst.base_damage + (10 * level) -- Scale damage with level
+            if inst.damage_multiplier then
+                damage = damage * inst.damage_multiplier
+            end
+    
             for _, ent in ipairs(ents) do
                 if ent.components.combat and ent ~= inst then
                     --damage

@@ -17,6 +17,18 @@ function Leveler.Init(inst)
 	inst.experience = inst.experience or 0
 	inst.skillpoints = inst.skillpoints or 0
     inst.unlocked_skills = inst.unlocked_skills or {}
+	inst.base_damage = 10
+
+    local old_calc_damage = inst.components.combat.CalcDamage
+	inst.components.combat.CalcDamage = function(self, target, weapon, multiplier)
+        local damage = old_calc_damage(self, target, weapon, multiplier)
+		if weapon then
+			damage = inst.base_damage + (weapon.components.weapon.damage or 0)
+		else
+			damage = inst.base_damage
+		end
+        return damage
+    end
 
 	-- Level up function
 	function inst:LevelUp()
@@ -56,13 +68,13 @@ function Leveler.Init(inst)
 	function Leveler.ApplyBuffs(inst)
         if inst.level >= 5 then
             -- Example: Faster movement speed at level 5+
-            inst.components.locomotor:SetExternalSpeedMultiplier(inst, "level_buff", 1.25) -- 25% faster
+            inst.components.locomotor:SetExternalSpeedMultiplier(inst, "level_buff", 1.1) -- 10% faster
         end
 
         if inst.level >= 10 then
             -- Example: Damage multiplier at level 10+
             if inst.components.combat then
-                inst.components.combat.externaldamagemultipliers:SetModifier("level_buff", 1.5) -- 50% more damage
+                inst.components.combat.externaldamagemultipliers:SetModifier("level_buff", 1.1) -- 10% more damage
             end
         end
 
