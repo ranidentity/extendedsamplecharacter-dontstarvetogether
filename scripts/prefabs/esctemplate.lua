@@ -3,6 +3,7 @@ local MakePlayerCharacter = require "prefabs/player_common"
 local assets = {
     Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
 }
+local Leveler = require "scripts.leveler"
 
 -- Your character's stats
 TUNING.ESCTEMPLATE_HEALTH = 150
@@ -75,6 +76,11 @@ local master_postinit = function(inst)
 	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
 	
+	-- leveler
+    if Leveler and Leveler.Init then
+        Leveler.Init(inst)
+    end
+
 	inst.OnLoad = onload
     inst.OnNewSpawn = onload
 	

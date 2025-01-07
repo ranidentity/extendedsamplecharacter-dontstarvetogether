@@ -68,3 +68,12 @@ local skin_modes = {
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("esctemplate", "FEMALE", skin_modes)
+
+-- Import keybinds
+local Keybinds = require("keybinds") 
+AddPlayerPostInit(function(inst)
+    -- Register Keybinds after the player initializes
+    inst:DoTaskInTime(0, function()
+        Keybinds.Register(inst)
+    end)
+end)
