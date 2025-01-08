@@ -71,9 +71,15 @@ AddModCharacter("esctemplate", "FEMALE", skin_modes)
 
 -- Import keybinds
 local Keybinds = require("keybinds") 
+local Channeling = require("scripts/components/channeling")
+
 AddPlayerPostInit(function(inst)
     -- Register Keybinds after the player initializes
     inst:DoTaskInTime(0, function()
         Keybinds.Register(inst)
     end)
+    -- Custom: Add new components to player
+    if not inst.components.channeling then
+        inst:AddComponent("channeling")
+    end
 end)
