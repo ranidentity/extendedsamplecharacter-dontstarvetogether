@@ -3,6 +3,8 @@ local WORKSKILL = {
         name = "Worker+",
         description = "Increases working performance by 10%.",
         max_level = 1,
+        requirements= {"hunger_plus","sanity_plus","health_plus"},
+        position={x=50,y=100},
         effect = function(inst, level)
             -- Increase gathering speed by 10%
             if inst.components.worker then

@@ -6,6 +6,8 @@ local DANCE ={
         description = "Dancing.",
         max_level = 1,
         channel_time = 5, -- Channeling duration in seconds
+        requirements= {"worker_plus"},
+        position={x=150,y=200},
         on_start = function(inst, level)
             -- Start channeling
             inst.components.channeling:StartChanneling()

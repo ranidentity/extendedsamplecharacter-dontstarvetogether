@@ -3,6 +3,8 @@ local BASICPASSIVE ={
         name = "Hunger+",
         description = "Increases hunger capacity by 5 per level.",
         max_level = 5,
+        requirements= {},
+        position={x=0,y=0},
         effect = function(inst, level)
             local increase = 5 * level
             inst.components.hunger:SetMax(inst.components.hunger.max + increase)
@@ -16,6 +18,8 @@ local BASICPASSIVE ={
         name = "Sanity+",
         description = "Increases sanity capacity by 5 per level.",
         max_level = 5,
+        requirements= {},
+        position={x=100,y=0},
         effect = function(inst, level)
             local increase = 5 * level
             inst.components.sanity:SetMax(inst.components.sanity.max + increase)
@@ -29,6 +33,8 @@ local BASICPASSIVE ={
         name = "Health+",
         description = "Increases health capacity by 10 per level.",
         max_level = 5,
+        requirements= {},
+        position={x=200,y=0},
         effect = function(inst, level)
             local increase = 10 * level
             inst.components.health:SetMaxHealth(inst.components.health.maxhealth + increase)

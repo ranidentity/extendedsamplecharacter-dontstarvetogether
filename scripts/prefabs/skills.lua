@@ -13,6 +13,8 @@ local SKILLS = {
         name = "Damage Boost",
         description = "Increases damage by 10% per level.",
         max_level = 5,
+        requirements= {},
+        position={x=0,y=300},
         effect = function(inst, level)
             -- Calculate the damage boost
             local damage_increase = 0.1 * level -- 10% per level
@@ -32,6 +34,8 @@ local SKILLS = {
         description = "Leap forwards. CD: 10 seconds. Hunger Cost: 10-(2*level)",
         cooldown = 10,
         max_level = 5,
+        requirements= {},
+        position={x=0,y=400},
         effect = function(inst, level)
             if inst.dash_cd then
                 print("Dash is on cooldown!")
@@ -66,6 +70,8 @@ local SKILLS = {
         description= "Slam the ground. Level 3 and above inflict stun. CD: 15 seconds. Hunger Cost: 15 - (2*level). Sanity Cost: 15 - (2*level). ",
         cooldown = 15,
         max_level = 5,
+        requirements= {},
+        position={x=0,y=400},
         effect = function(inst, level)
             if inst.smash_ground_cd then
                 print("Smash is on cooldown!")

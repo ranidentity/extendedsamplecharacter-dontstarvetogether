@@ -3,6 +3,8 @@ local SWIMMING ={
         name = "Swimming",
         description = "Enables swimming. Reduce sanity, hunger, and speed based on level.",
         max_level = 5,
+        requirements= {"hunger_plus","sanity_plus","health_plus"},
+        position={x=150,y=100},
         on_level_up = function(inst, level)
             -- Enable swimming if not already enabled
             if not inst:HasTag("swimmer") then

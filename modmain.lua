@@ -33,6 +33,12 @@ Assets = {
 	
 	Asset( "IMAGE", "images/names_gold_esctemplate.tex" ),
     Asset( "ATLAS", "images/names_gold_esctemplate.xml" ),
+-- TODO new images for skill tree
+    Asset("IMAGE", "images/ui/skilltree_bg.tex"),
+    Asset("FILE", "images/ui/skilltree_bg.xml"),
+    Asset("IMAGE", "images/ui/skill_icon.tex"),
+    Asset("FILE", "images/ui/skill_icon.xml"),
+
 }
 
 AddMinimapAtlas("images/map_icons/esctemplate.xml")
@@ -71,13 +77,27 @@ AddModCharacter("esctemplate", "FEMALE", skin_modes)
 
 -- Import keybinds
 local Keybinds = require("keybinds") 
-local Channeling = require("scripts/components/channeling")
+-- local Channeling = require("scripts/components/channeling")
+local SkillTreeUI = require("scripts/skilltreeui")
 
 AddPlayerPostInit(function(inst)
     -- Register Keybinds after the player initializes
     inst:DoTaskInTime(0, function()
-        Keybinds.Register(inst)
+        Keybinds.Register()
     end)
+    -- Add skill tree ui
+    inst.skillTreeUI = SkillTreeUI(inst)
+    --Open skill tree
+    TheInput:AddKeyHandler(function(key, down)
+        if down and key == KEY_K then
+            if inst.skillTreeUI.root.shown then
+                inst.skillTreeUI:Hide()
+            else
+                inst.skillTreeUI:Show()
+            end
+        end
+    end)
+
     -- Custom: Add new components to player
     if not inst.components.channeling then
         inst:AddComponent("channeling")

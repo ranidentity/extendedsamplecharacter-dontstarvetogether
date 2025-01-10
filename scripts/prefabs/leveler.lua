@@ -50,6 +50,14 @@ function Leveler.Init(inst)
 
 	function inst:UnlockSkill(skill_name)
         if self.skillpoints > 0 and SKILLS[skill_name] then
+			-- Check if the player meets the skill requirements
+			for _, req_skill in ipairs(SKILLS[skill_name].requirements) do
+				if not self.unlocked_skills[req_skill] or self.unlocked_skills[req_skill] < 1 then
+					print("You need to unlock " .. req_skill .. " first!")
+					return
+				end
+			end
+			
 			local current_level = self.unlocked_skills[skill_name] or 0
 			if current_level >= SKILLS[skill_name].max_level then
 				print(SKILLS[skill_name].name .. " is already at max level!")
